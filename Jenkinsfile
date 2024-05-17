@@ -15,10 +15,17 @@ pipeline {
         }
 
         stage('Build Docker Image') {
+              steps {
+                  sh "ls"
+                  sh " docker image build -t  springboot:${env.GIT_COMMIT} ."
+              }
+         }
+         stage('Deploy Docker Image') {
             steps {
-                sh 'docker build -t my-app:${env.BUILD_ID} .'
+                sh 'docker run -d -p 2000:8080 springboot:${env.GIT_COMMIT}'
             }
         }
+
 
 
     }
