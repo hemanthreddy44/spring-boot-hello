@@ -16,21 +16,11 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("my-docker-image", "-f Dockerfile .")
-                }
+                sh 'docker build -t my-app:${env.BUILD_ID} .'
             }
         }
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://my-docker-registry.com', 'my-docker-credentials-id') {
-                        docker.image("my-docker-image").push("my-tag")
-                    }
-                }
-            }
-        }
+
     }
 
     post {
