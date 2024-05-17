@@ -20,6 +20,7 @@ pipeline {
                   sh " docker image build -t  springboot:${env.GIT_COMMIT} ."
               }
          }
+         
          stage('Deploy Docker Image') {
             steps {
                 sh 'docker run -d -p 2000:8080 springboot:${env.GIT_COMMIT}'
