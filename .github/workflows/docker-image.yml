@@ -33,4 +33,4 @@ jobs:
         $filePath = 'C:\\Users\\admin123\\automation\\hr.txt'
         (Get-Content $filePath) -replace 'dtv.location.image=.*', 'dtv.location.storeNumber=${{ github.event.inputs.NEW_image }}' | Set-Content $filePath
         (Get-Content $filePath) -replace 'dtv.location.replicas=.*', 'dtv.location.replicas=${{ github.event.inputs.replicas }}' | Set-Content $filePath
-      shell: pwsh
+      shell: powershell
