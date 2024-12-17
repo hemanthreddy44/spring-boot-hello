@@ -2,6 +2,15 @@ name: Docker Image CI
 
 on:
   workflow_dispatch:
+    inputs:
+      NEW_image:
+        description: 'New image'
+        required: true
+        default: ''
+      replicas:
+        description: 'Number of replicas'
+        required: true
+        default: ''
   push:
     branches: [ "main" ]
   pull_request:
@@ -19,3 +28,9 @@ jobs:
       run: |
         whoami
         ssh admin123@40.83.137.235 "powershell -Command Get-ChildItem"
+    - name: Update configuration file
+      run: |
+        $filePath = 'C:\\Users\\admin123\\automation\\hr.txt'
+        (Get-Content $filePath) -replace 'dtv.location.image=.*', 'dtv.location.storeNumber=${{ github.event.inputs.NEW_image }}' | Set-Content $filePath
+        (Get-Content $filePath) -replace 'dtv.location.replicas=.*', 'dtv.location.replicas=${{ github.event.inputs.replicas }}' | Set-Content $filePath
+      shell: pwsh
