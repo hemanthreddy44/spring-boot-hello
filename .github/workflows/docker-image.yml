@@ -17,4 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: whoami
+      run: |
+      whoami
+      ssh admin123@40.83.137.235 "ls"
