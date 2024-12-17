@@ -23,16 +23,14 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
       - name: Build the Docker image
         run: |
           whoami
           ssh admin123@40.83.137.235 "powershell -Command Get-ChildItem"
       - name: Update configuration file on vm1
         run: |
-          ssh admin123@40.83.137.235 << 'EOF'
-            $filePath = 'C:\\Users\\admin123\\automation\\hr.txt'
-            (Get-Content $filePath) -replace 'dtv.location.image=.*', 'dtv.location.storeNumber=${{ github.event.inputs.NEW_image }}' | Set-Content $filePath
-            (Get-Content $filePath) -replace 'dtv.location.replicas=.*', 'dtv.location.replicas=${{ github.event.inputs.replicas }}' | Set-Content $filePath
-          EOF
+          $filePath = 'C:\\Users\\admin123\\automation\\hr.txt'
+          ssh admin123@40.83.137.235 "powershell -Command \"(Get-Content $filePath) -replace 'dtv.location.image=.*', 'dtv.location.storeNumber=${{ github.event.inputs.NEW_image }}' | Set-Content $filePath\""
+          ssh admin123@40.83.137.235 "powershell -Command \"(Get-Content $filePath) -replace 'dtv.location.replicas=.*', 'dtv.location.replicas=${{ github.event.inputs.replicas }}' | Set-Content $filePath\""
         shell: powershell
