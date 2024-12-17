@@ -31,5 +31,4 @@ jobs:
       - name: Update configuration file on vm1
         run: |
           ssh admin123@40.83.137.235 "powershell cat C:\\Users\\admin123\\automation\\hr.txt"
-          ssh admin123@40.83.137.235 "powershell -Command \"(Get-Content $filePath) -replace 'dtv.location.replicas=.*', 'dtv.location.replicas=10' | Set-Content $filePath\""
         shell: powershell
